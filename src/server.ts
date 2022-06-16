@@ -29,9 +29,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get("/filteredimage", async (req, res) => {
     let { image_url } = req.query;
     if (!image_url) {
-      return res.status(422).send('Image query cannot be null!');
+      return res.status(422).send('invalid image: null not allowed!');
     }
-
 
     console.log(image_url)
     try {
@@ -40,10 +39,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       res.on('finish', () => deleteLocalFiles([image_path]));
     } catch (err) {
       console.log(err);
-      return res.status(422).send('Image cannot be downloaded, check the url.');
-    }
-    
-
+      return res.status(422).send('unable to download image, change the url.');
+    } 
   })
 
   /**************************************************************************** */
